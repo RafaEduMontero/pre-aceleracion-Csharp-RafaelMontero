@@ -1,6 +1,8 @@
 ﻿using ChallengeAlkemyDisney.Context;
 using ChallengeAlkemyDisney.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ChallengeAlkemyDisney.Repositories
 {
@@ -12,12 +14,12 @@ namespace ChallengeAlkemyDisney.Repositories
         }
         public List<Celebrity> GetAllCelebrities()
         {
-            return GetAllModels();
+            return DbSet.Include(g => g.MovieOrSeries).ToList();
         }
 
         public Celebrity GetCelebrity(int id)
         {
-            return Get(id);
+            return DbSet.Include(g => g.MovieOrSeries).FirstOrDefault(g => g.Id == id);
         }
 
         public Celebrity AddCelebrity(Celebrity celebrity)

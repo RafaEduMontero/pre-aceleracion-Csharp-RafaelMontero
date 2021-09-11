@@ -95,6 +95,9 @@ namespace ChallengeAlkemyDisney.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Valuation")
                         .HasColumnType("int");
 

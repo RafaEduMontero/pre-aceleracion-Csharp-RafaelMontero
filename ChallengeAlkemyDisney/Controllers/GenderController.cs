@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ChallengeAlkemyDisney.Controllers
 {
@@ -20,13 +19,14 @@ namespace ChallengeAlkemyDisney.Controllers
         {
             _genderRepository = genderRepository;
         }
-        // GET: api/<GenderController>
+        // GET
         [HttpGet]
         public IActionResult Get()
         {
             try
             {
-                return Ok(_genderRepository.GetAllGenders());
+                var genders = _genderRepository.GetAllGenders();
+                return Ok(genders);
             }
             catch(Exception ex)
             {
@@ -34,7 +34,7 @@ namespace ChallengeAlkemyDisney.Controllers
             }
         }
 
-        // GET api/<GenderController>/5
+        // GET
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -50,9 +50,9 @@ namespace ChallengeAlkemyDisney.Controllers
             }
         }
 
-        // POST api/<GenderController>
+        // POST
         [HttpPost]
-        public IActionResult Post([FromBody] Gender gender)
+        public IActionResult Post(Gender gender)
         {
             try
             {
@@ -64,19 +64,34 @@ namespace ChallengeAlkemyDisney.Controllers
             }
         }
 
-        // PUT api/<GenderController>/5
+        // PUT 
         [HttpPut]
-        public IActionResult Put([FromBody] Gender gender)
+        public IActionResult Put(Gender gender)
         {
-            Gender originalGender = _genderRepository.GetGender(gender.Id);
-            if (originalGender == null) return BadRequest($"El género con {gender.Id} no existe");
-            originalGender.Name = gender.Name;
-            originalGender.Image = gender.Image;
-            _genderRepository.UpdateGender(originalGender);
-            return Ok(originalGender);
+            try
+            {
+                Gender originalGender = _genderRepository.GetGender(gender.Id);
+                if (originalGender == null) return BadRequest($"El género con {gender.Id} no existe");
+                originalGender.Name = gender.Name;
+                originalGender.Image = gender.Image;
+
+                if (originalGender.MovieOrSeries != null)
+                {
+                    foreach (var g in originalGender.MovieOrSeries)
+                    {
+                        g.Id = gender.Id;
+                    }
+                }
+                _genderRepository.UpdateGender(originalGender);
+                return Ok(originalGender);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // DELETE api/<GenderController>/5
+        // DELETE 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

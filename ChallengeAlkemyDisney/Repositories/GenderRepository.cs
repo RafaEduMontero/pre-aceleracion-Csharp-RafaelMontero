@@ -1,5 +1,6 @@
 ﻿using ChallengeAlkemyDisney.Context;
 using ChallengeAlkemyDisney.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;

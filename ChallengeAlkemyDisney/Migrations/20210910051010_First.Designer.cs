@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChallengeAlkemyDisney.Migrations
 {
     [DbContext(typeof(DisneyContext))]
-    [Migration("20210901023832_First")]
+    [Migration("20210910051010_First")]
     partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -95,6 +95,9 @@ namespace ChallengeAlkemyDisney.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Valuation")

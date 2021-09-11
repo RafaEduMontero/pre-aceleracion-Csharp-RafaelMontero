@@ -12,6 +12,12 @@ namespace ChallengeAlkemyDisney.Repositories
         where TContext : DbContext
     {
         private readonly TContext _dbContext;
+        private DbSet<TModel> _dbSet;
+
+        protected DbSet<TModel> DbSet
+        {
+            get { return _dbSet ??= _dbContext.Set<TModel>(); }
+        }
         protected BaseRepository(TContext dbContext)
         {
             _dbContext = dbContext;
@@ -19,7 +25,7 @@ namespace ChallengeAlkemyDisney.Repositories
 
         public List<TModel> GetAllModels()
         {
-            return _dbContext.Set<TModel>().ToList();
+            return DbSet.ToList();
         }
         public TModel Add(TModel model)
         {

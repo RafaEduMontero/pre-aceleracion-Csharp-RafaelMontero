@@ -8,5 +8,8 @@ namespace ChallengeAlkemyDisney.Repositories
     {
         List<Celebrity> GetAllCelebrities();
         Celebrity GetCelebrity(int id);
+        Celebrity AddCelebrity(Celebrity celebrity);
+        Celebrity UpdateCelebrity(Celebrity celebrity);
+        void DeleteCelebrity(int id);
     }
 }
