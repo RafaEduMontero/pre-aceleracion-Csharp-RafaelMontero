@@ -2,6 +2,7 @@
 using ChallengeAlkemyDisney.Repositories;
 using ChallengeAlkemyDisney.ViewModels.MoOrSerie;
 using ChallengeAlkemyDisney.ViewModels.MovOrSerie;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace ChallengeAlkemyDisney.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MovieOrSerieController : ControllerBase
     {
         private readonly IMovieOrSerieRepository _movieOrSerieRepository;

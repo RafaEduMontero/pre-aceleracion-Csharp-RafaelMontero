@@ -1,5 +1,6 @@
 ﻿using ChallengeAlkemyDisney.Models;
 using ChallengeAlkemyDisney.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace ChallengeAlkemyDisney.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GenderController : ControllerBase
     {
         private readonly IGenderRepository _genderRepository;
