@@ -2,6 +2,7 @@
 using ChallengeAlkemyDisney.Repositories;
 using ChallengeAlkemyDisney.ViewModels;
 using ChallengeAlkemyDisney.ViewModels.Cele;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace ChallengeAlkemyDisney.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
+
     public class CelebrityController : ControllerBase
     {
         private readonly ICelebrityRepository _celebrityRepository;

@@ -1,6 +1,8 @@
 using ChallengeAlkemyDisney.Context;
+using ChallengeAlkemyDisney.Interfaces;
 using ChallengeAlkemyDisney.Models;
 using ChallengeAlkemyDisney.Repositories;
+using ChallengeAlkemyDisney.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SendGrid.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,6 +84,13 @@ namespace ChallengeAlkemyDisney
             services.AddScoped<ICelebrityRepository, CelebrityRepository>();
             services.AddScoped<IGenderRepository, GenderRepository>();
             services.AddScoped<IMovieOrSerieRepository, MovieOrSerieRepository>();
+
+            services.AddSendGrid(SendGrid =>
+            {
+                SendGrid.ApiKey = "Tu api key send grid";
+            });
+
+            services.AddScoped<IMailService, MailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +106,8 @@ namespace ChallengeAlkemyDisney
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

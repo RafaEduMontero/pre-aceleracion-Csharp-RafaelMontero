@@ -1,4 +1,5 @@
-﻿using ChallengeAlkemyDisney.Models;
+﻿using ChallengeAlkemyDisney.Interfaces;
+using ChallengeAlkemyDisney.Models;
 using ChallengeAlkemyDisney.ViewModels.Auth.Login;
 using ChallengeAlkemyDisney.ViewModels.Auth.Register;
 using Microsoft.AspNetCore.Http;
@@ -23,12 +24,14 @@ namespace ChallengeAlkemyDisney.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly IMailService _mailService;
 
-        public AuthenticationController(UserManager<User> userManager, IConfiguration configuration, SignInManager<User> signInManager)
+        public AuthenticationController(UserManager<User> userManager, IConfiguration configuration, SignInManager<User> signInManager,IMailService mailService)
         {
             _userManager = userManager;
             _configuration = configuration;
             _signInManager = signInManager;
+            _mailService = mailService;
         }
         //Registro
         [HttpPost]
@@ -60,6 +63,8 @@ namespace ChallengeAlkemyDisney.Controllers
                     Message = $"User Creation Failed! Errors: {string.Join(", ", result.Errors.Select(x => x.Description))}"
                 });
             }
+
+            await _mailService.SendMail(user);
 
             return Ok(new
             {
