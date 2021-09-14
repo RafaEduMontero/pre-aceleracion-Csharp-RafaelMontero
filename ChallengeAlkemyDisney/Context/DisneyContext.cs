@@ -9,7 +9,7 @@ namespace ChallengeAlkemyDisney.Context
 {
     public class DisneyContext : DbContext
     {
-        public DisneyContext(DbContextOptions options) : base(options)
+        public DisneyContext(DbContextOptions<DisneyContext> options) : base(options)
         {
 
         }
