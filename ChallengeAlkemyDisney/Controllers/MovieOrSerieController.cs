@@ -178,7 +178,14 @@ namespace ChallengeAlkemyDisney.Controllers
             {
                 foreach(var c in movieOrSerie.Celebrities)
                 {
-                    c.Id = movieOrSerie.Id;
+                    if (c.Id != 0)
+                    {
+                        var celebrity = _celebrityRepository.GetAllCelebrities().FirstOrDefault(ce => ce.Id == c.Id);
+                        if (celebrity != null)
+                        {
+                            originaMovie.Celebrities.Add(celebrity);
+                        }
+                    }
                 }
             }
 

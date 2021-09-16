@@ -118,6 +118,10 @@ namespace ChallengeAlkemyDisney.Controllers
                             }
                         }
                     }
+                    else
+                    {
+                        return BadRequest($"Personaje con id de Pelicula {idMovie} no existe");
+                    }
                 }
 
                 if (!celebrities.Any()) return NoContent();
@@ -162,10 +166,11 @@ namespace ChallengeAlkemyDisney.Controllers
                 Name = celebrity.Name,
                 Age = celebrity.Age,
                 Weight = celebrity.Weight,
-                History = celebrity.History
+                History = celebrity.History,
+                MovieOrSeries = null
             };
 
-            if (celebrity.MovieOrSeries != null)
+            if (celebridad.MovieOrSeries == null)
             {
                 foreach(var mos in celebrity.MovieOrSeries)
                 {
@@ -199,9 +204,16 @@ namespace ChallengeAlkemyDisney.Controllers
 
             if (celebrity.MovieOrSeries != null)
             {
-                foreach(var c in originalCelebrity.MovieOrSeries)
+                foreach(var c in celebrity.MovieOrSeries)
                 {
-                    c.Id = celebrity.Id;
+                    if (c.Id != 0)
+                    {
+                        var movie = _movieOrSerieRepository.GetAllMovieOrSeries().FirstOrDefault(m => m.Id == c.Id);
+                        if (movie != null)
+                        {
+                            originalCelebrity.MovieOrSeries.Add(movie);
+                        }
+                    }
                 }
             }
 
